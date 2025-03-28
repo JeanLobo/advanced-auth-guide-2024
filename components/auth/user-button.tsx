@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { FaUser, FaUserAlt, FaUserFriends } from "react-icons/fa";
+import { FaUser, FaUserFriends } from "react-icons/fa";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { LogoutButton } from "./logout-button";
 import { Button } from "@react-email/components";
@@ -20,7 +20,7 @@ export const UserButton = () => {
   const user = useCurrentUser();
 
   if (!user) {
-    return "Unauthorized"
+    return "Não autorizado"
   }
 
   return (
@@ -47,12 +47,12 @@ export const UserButton = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">
           <FaUserFriends className="h-4 w-4" />
-          <Button className="ml-2">Profile</Button>
+          <Button className="ml-2">Perfil</Button>
         </DropdownMenuItem>
         <LogoutButton>
           <DropdownMenuItem className="cursor-pointer">
             <ExitIcon className="h-4 w-4" />
-            <Button className="ml-2">Sign Out</Button>
+            <Button className="ml-2">Sair</Button>
           </DropdownMenuItem>
         </LogoutButton>
       </DropdownMenuContent>

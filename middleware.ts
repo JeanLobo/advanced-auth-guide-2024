@@ -5,32 +5,35 @@ import authConfig from "./auth.config";
 const { auth } = NextAuth(authConfig);
 
 import {
-  DEFAULT_LOGIN_REDIRECT,
-  apiAuthPrefix,
-  authRoutes,
-  publicRoutes,
+    DEFAULT_LOGIN_REDIRECT,
+    apiAuthPrefix,
+    authRoutes,
+    publicRoutes,
 } from "@/routes";
 
 export default auth((req) => {
   const { nextUrl } = req;
-  const isLogedIn = !!req.auth;
+  const isLoggedIn = !!req.auth;
   
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
+  // Tratar rotas de API auth
   if (isApiAuthRoute) {
-    return null;
+    return;
   }
 
+  // Tratar rotas de autenticação
   if (isAuthRoute) {
-    if (isLogedIn) {
+    if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
-    return null;
+    return;
   }
 
-  if (!isLogedIn && !isPublicRoute) {
+  // Rotas protegidas - verificar se o usuário está logado
+  if (!isLoggedIn && !isPublicRoute) {
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
       callbackUrl += nextUrl.search
@@ -44,9 +47,10 @@ export default auth((req) => {
     ));
   }
 
-  return null;
+  return;
 })
 
+// Configuração do middleware para atender todas as rotas
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

@@ -7,6 +7,7 @@ import authConfig from "./auth.config";
 import { getUserById } from "@/data/user";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 import { getAccountByUserId } from "./data/account";
+import { getDefaultUserTenant } from "./data/tenant";
 
 export const {
   handlers: { GET, POST },
@@ -77,6 +78,10 @@ export const {
         session.user.email = token.email as string;
         session.user.image = token.image as string;
         session.user.isOAuth = token.isOAuth as boolean;
+        
+        // Add tenant and company info
+        session.user.currentTenantId = token.currentTenantId as string | undefined;
+        session.user.currentCompanyId = token.currentCompanyId as string | undefined;
       }
 
       return session;
@@ -90,6 +95,9 @@ export const {
 
       const existingAccount = await getAccountByUserId(existingUser.id);
       
+      // Get user's default tenant
+      const defaultUserTenant = await getDefaultUserTenant(existingUser.id);
+      
       // Custom token fields
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name,
@@ -97,6 +105,13 @@ export const {
       token.image = existingUser.image,
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      
+      // Add tenant and company info to token
+      if (defaultUserTenant) {
+        token.currentTenantId = defaultUserTenant.tenantId;
+        // For now, we don't set a default company - this would be handled 
+        // when the user selects a company or we implement a default company logic
+      }
 
       return token;
     }

@@ -81,3 +81,80 @@ Project Progress:
 - [x] Protect Server Actions for Admins only
 - [x] Change Email
 - [x] Enable / disable 2FA in settings
+
+# Gestão Simples
+
+Sistema de gestão empresarial para ME, MEI e EPP.
+
+## Migração do Banco de Dados
+
+### Atualização do Schema (Março 2023)
+
+Foram feitas as seguintes alterações no schema:
+
+1. **Modelo Tenant**:
+   - Removido o campo `slug`
+
+2. **Modelo Company**:
+   - Removido o campo `slug`
+   - Adicionados novos campos para dados cadastrais:
+     - `legal_name`: Razão Social
+     - `registration_type`: Tipo de inscrição (CNPJ, CPF ou Estrangeiro)
+     - `registration_number`: Número de inscrição (CNPJ, CPF, etc.)
+     - `state_registration`: Inscrição Estadual
+     - `municipal_registration`: Inscrição Municipal
+     - `suframa_registration`: Inscrição Suframa
+     - `tax_regime`: Regime Tributário
+     - Diversos campos de endereço
+     - `active`: Status de atividade da empresa
+
+3. **Modelo User**:
+   - Adicionado o campo `birthDate`: Data de aniversário do usuário
+
+### Aplicando as Migrações
+
+Siga estes passos para atualizar seu banco de dados:
+
+1. Gere uma nova migração do Prisma:
+   ```bash
+   npx prisma migrate dev --name remove_slugs_add_company_fields
+   ```
+
+2. **OU** Execute o script SQL diretamente:
+   ```bash
+   psql -U seu_usuario -d seu_banco -f prisma/migrations/migration_script.sql
+   ```
+
+3. Gere o cliente Prisma atualizado:
+   ```bash
+   npx prisma generate
+   ```
+
+4. Reinicie o aplicativo:
+   ```bash
+   npm run dev
+   ```
+
+## Desenvolvimento
+
+### Instalação de Dependências
+
+```bash
+npm install
+# ou
+yarn
+# ou
+pnpm install
+```
+
+### Iniciar o Servidor de Desenvolvimento
+
+```bash
+npm run dev
+# ou
+yarn dev
+# ou
+pnpm dev
+```
+
+Acesse [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FadeLoader } from "react-spinners";
 import { useSearchParams } from "next/navigation";
 
-import { newVerification }  from "@/actions/new-verification";
+import { newVerification } from "@/actions/new-verification";
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
@@ -21,7 +21,7 @@ export const NewVerificationForm = () => {
     if (success || error) return
 
     if (!token) {
-      setError("Missing token!");
+      setError("Token não encontrado!");
       return;
     }
 
@@ -31,7 +31,7 @@ export const NewVerificationForm = () => {
         setError(data.error);
       })
       .catch(() => {
-        setError("Something went wrong!");
+        setError("Algo deu errado!");
       })
   }, [token, success, error]);
 
@@ -41,8 +41,8 @@ export const NewVerificationForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Confirming your identity"
-      backButtonLabel="Back to Login"
+      headerLabel="Confirmando sua identidade"
+      backButtonLabel="Voltar para Login"
       backButtonHref="/auth/login"
     >
       <div className="flex items-center w-full justify-center">

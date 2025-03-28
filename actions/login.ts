@@ -3,7 +3,6 @@
 import * as z from "zod";
 import { AuthError } from "next-auth";
 
-import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getUserByEmail } from "@/data/user";
@@ -13,23 +12,27 @@ import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
-export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string) => {
+export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null) => {
+  console.log("[SERVER] Início do processo de login", { email: values.email, callbackUrl });
+  
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    console.log("[SERVER] Falha na validação dos campos", validatedFields.error);
+    return { error: "Campos inválidos!" }
   }
 
   const { email, password, code } = validatedFields.data;
 
   const existingUser = await getUserByEmail(email);
+  console.log("[SERVER] Usuário encontrado?", !!existingUser);
 
   if (!existingUser || !existingUser.email) {
-    return { error: "Invalid credentials!" }
+    return { error: "Credenciais inválidas!" }
   }
 
   if (!existingUser.password) {
-    return { error: "Login With a OAuth provider." }
+    return { error: "Faça login com um provedor OAuth." }
   }
 
   if (!existingUser.emailVerified) {
@@ -37,26 +40,27 @@ export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: s
 
     await sendVerificationEmail(verificationToken.email, verificationToken.token, existingUser.name!);
 
-    return { success: "Confirmation email sent!" }
+    return { success: "Email de confirmação enviado!" }
   }
 
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
+    console.log("[SERVER] Autenticação de dois fatores ativada");
     if (code) {
       // Verify code
       const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
 
       if (!twoFactorToken) {
-        return { error: "Invalid code!" }
+        return { error: "Código inválido!" }
       }
 
       if (twoFactorToken.token !== code) {
-        return { error: "Invalid code!" }
+        return { error: "Código inválido!" }
       }
 
       const hasExpired = new Date(twoFactorToken.expires) < new Date();
 
       if (hasExpired) {
-        return { error: "Code has expired!" }
+        return { error: "Código expirado!" }
       }
 
       await db.twoFactorToken.delete({
@@ -84,21 +88,28 @@ export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: s
   }
 
   try {
-    await signIn("credentials", {
-      email,
-      password,
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-    })
+    console.log("[SERVER] Autenticação validada, retornando sucesso para cliente iniciar login");
+    
+    // Não tentamos mais fazer o login no server side
+    // Retornamos dados para o cliente fazer o login
+    return { 
+      success: "Credenciais validadas!",
+      redirectUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      credentials: {
+        email,
+      }
+    };
   } catch (error) {
+    console.log("[SERVER] Erro na autenticação:", error);
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin": 
-          return { error: "Invalid credentials!" }
+          return { error: "Credenciais inválidas!" }
         default: 
-          return { error: "Something went wrong!" }
+          return { error: "Algo deu errado!" }
       }
     }
 
-    throw error
+    throw error;
   }
 }

@@ -11,7 +11,6 @@ import {
   Section,
   Text,
 } from '@react-email/components';
-import * as React from 'react';
 
 interface VerificationEmailProps {
   confirmLink: string;
@@ -25,16 +24,16 @@ export const VerificationEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>Hi {name}, We noticed a recent attempt to Register for a 🔐Auth account with your email. If this was you</Preview>
+      <Preview>Olá {name}, recebemos sua solicitação de cadastro no sistema Gestão Simples. Por favor, confirme seu email.</Preview>
       <Body style={main}>
         <Container>
           <Section style={logo}>
-            <Img src={`https://korabi-ecommerce-admin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdncmjp41z%2Fimage%2Fupload%2Fv1704195942%2Fzxr7vlhj7zsvffcclohc.png&w=1920&q=75`} />
+            <Text style={{ fontSize: 32, fontWeight: 'bold', textAlign: 'center', color: '#333' }}>
+              Gestão Simples
+            </Text>
           </Section>
 
           <Section style={content}>
-            <Img width={620} src={`https://korabi-ecommerce-admin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdncmjp41z%2Fimage%2Fupload%2Fv1704195773%2Fskhemiousn5nzs3vib1d.png&w=1920&q=75`} />
-
             <Row style={{ ...boxInfos, paddingBottom: '0' }}>
               <Column>
                 <Heading
@@ -44,7 +43,7 @@ export const VerificationEmail = ({
                     textAlign: 'center',
                   }}
                 >
-                  Hi {name},
+                  Olá {name},
                 </Heading>
                 <Heading
                   as="h2"
@@ -54,14 +53,14 @@ export const VerificationEmail = ({
                     textAlign: 'start',
                   }}
                 >
-                  We noticed a recent attempt to Register for a 🔐Auth account with your email.
+                  Recebemos sua solicitação de cadastro no sistema Gestão Simples.
                 </Heading>
 
                 <Text style={paragraph}>
-                  If this was you, click <a href={confirmLink}>here</a>
+                  Se foi você que solicitou, clique <a href={confirmLink}>aqui</a> para confirmar seu email.
                 </Text>
                 <Text style={{ ...paragraph, marginTop: -5 }}>
-                  If this wasn't you, please ignore this email.
+                  Se não foi você, por favor ignore este email.
                 </Text>
               </Column>
             </Row>

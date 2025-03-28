@@ -14,9 +14,9 @@ const AdminPage = () => {
     admin()
       .then((response) => {
         if (response.success) {
-          toast.success("Allowed Server Action!")
+          toast.success("Rota da API exclusiva para Administrador!")
         } else {
-          toast.error("Forbidden");
+          toast.error("Não autorizado");
         }
       })
   }
@@ -25,9 +25,9 @@ const AdminPage = () => {
     fetch("/api/admin")
       .then((response) => {
         if (response.ok) {
-          toast.success("Allowed API Route!")
+          toast.success("Rota da API exclusiva para Administrador!")
         } else {
-          toast.error("Forbidden");
+          toast.error("Não autorizado");
         }
       })
   }
@@ -42,22 +42,22 @@ const AdminPage = () => {
       <Separator />
       <CardContent className="space-y-4 mt-4">
         <RoleGate allowedRole="ADMIN">
-          <FormSuccess message="You are allowed to see this content!" />
+          <FormSuccess message="Você tem permissão para ver este conteúdo!" />
         </RoleGate>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
           <p className="text-sm font-medium">
-            Admin-only API Route
+            Rota da API exclusiva para Administrador
           </p>
           <Button onClick={onApiClick}>
-            Click to Test
+            Clique para testar
           </Button>
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
           <p className="text-sm font-medium">
-            Admin-only Server Action
+            Rota da API exclusiva para Administrador
           </p>
           <Button onClick={onServerActionClick}>
-            Click to Test
+            Clique para testar
           </Button>
         </div>
       </CardContent>

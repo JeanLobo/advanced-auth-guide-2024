@@ -10,10 +10,8 @@ import {
   Row,
   Section,
   Text,
-  Tailwind,
-  Hr
+  Tailwind
 } from "@react-email/components";
-import * as React from "react";
 
 interface TwoFactorEmailProps {
   token: string;
@@ -23,46 +21,63 @@ export const TwoFactorEmail = ({ token, name }: TwoFactorEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Hi {name}, We noticed a recent attempt to login to your 🔐Auth account. If this was you</Preview>
+      <Preview>Olá {name}, identificamos uma tentativa recente de login na sua conta do Gestão Simples</Preview>
       <Body style={main}>
         <Tailwind>
           <Container>
             <Section style={logo}>
-              <Img
-                src={`https://korabi-ecommerce-admin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdncmjp41z%2Fimage%2Fupload%2Fv1704195942%2Fzxr7vlhj7zsvffcclohc.png&w=1920&q=75`}
-              />
+              <Text style={{ fontSize: 32, fontWeight: 'bold', textAlign: 'center', color: '#333' }}>
+                Gestão Simples
+              </Text>
             </Section>
 
             <Section style={content}>
-              <Img
-                width={620}
-                src={`https://korabi-ecommerce-admin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdncmjp41z%2Fimage%2Fupload%2Fv1704195773%2Fskhemiousn5nzs3vib1d.png&w=1920&q=75`}
-              />
-
-              <Row style={{ ...boxInfos, paddingBottom: "0" }}>
+              <Row style={{ ...boxInfos, paddingBottom: '0' }}>
                 <Column>
-                  <Heading className="text-3xl font-bold text-center">
-                    Hi {name},
+                  <Heading
+                    style={{
+                      fontSize: 32,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Olá {name},
                   </Heading>
                   <Heading
                     as="h2"
-                    className="text-2xl font-semibold"
+                    style={{
+                      fontSize: 26,
+                      fontWeight: 'bold',
+                      textAlign: 'start',
+                    }}
                   >
-                    We noticed a recent attempt to login to your 🔐Auth account. If this was you, please enter the following code to complete the login process.
+                    Identificamos uma tentativa recente de login na sua conta do Gestão Simples.
                   </Heading>
 
-                  <Hr className="font-semibold" />
+                  <Heading
+                    style={{
+                      fontSize: 32,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      paddingTop: 20
+                    }}
+                  >
+                    Seu código de verificação
+                  </Heading>
 
-                  <Text className="text-xl mt-3">
-                    This is your 2FA code: 
-                    <br />
-                    <span className="text-2xl mt-2 font-bold tracking-wider">{token}</span>
-                    <br />
-                    <span className="mt-2 text-lg">This code will expire in 5 minutes.</span>
-                  </Text>
+                  <Heading
+                    style={{
+                      fontSize: 32,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      paddingTop: 20
+                    }}
+                  >
+                    {token}
+                  </Heading>
 
                   <Text style={paragraph}>
-                    If this was not you, you can ignore this email.
+                    Se não foi você que tentou fazer login, recomendamos que você altere sua senha imediatamente.
                   </Text>
                 </Column>
               </Row>

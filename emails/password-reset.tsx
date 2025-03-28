@@ -10,8 +10,8 @@ import {
   Row,
   Section,
   Text,
+  Button,
 } from '@react-email/components';
-import * as React from 'react';
 
 interface PasswordResetEmailProps {
   resetPasswordLink: string;
@@ -25,16 +25,16 @@ export const PasswordResetEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>Hi {name}, We noticed a recent attempt to reset your 🔐Auth account password. If this was you</Preview>
+      <Preview>Olá {name}, recebemos sua solicitação de redefinição de senha do sistema Gestão Simples.</Preview>
       <Body style={main}>
         <Container>
           <Section style={logo}>
-            <Img src={`https://korabi-ecommerce-admin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdncmjp41z%2Fimage%2Fupload%2Fv1704195942%2Fzxr7vlhj7zsvffcclohc.png&w=1920&q=75`} />
+            <Text style={{ fontSize: 32, fontWeight: 'bold', textAlign: 'center', color: '#333' }}>
+              Gestão Simples
+            </Text>
           </Section>
 
           <Section style={content}>
-            <Img width={620} src={`https://korabi-ecommerce-admin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdncmjp41z%2Fimage%2Fupload%2Fv1704195773%2Fskhemiousn5nzs3vib1d.png&w=1920&q=75`} />
-
             <Row style={{ ...boxInfos, paddingBottom: '0' }}>
               <Column>
                 <Heading
@@ -44,24 +44,35 @@ export const PasswordResetEmail = ({
                     textAlign: 'center',
                   }}
                 >
-                  Hi {name},
+                  Olá {name},
                 </Heading>
                 <Heading
                   as="h2"
                   style={{
                     fontSize: 26,
                     fontWeight: 'bold',
-                    textAlign: 'center',
+                    textAlign: 'start',
                   }}
                 >
-                  We noticed a recent attempt to reset your 🔐Auth account password.
+                  Recebemos sua solicitação de redefinição de senha do sistema Gestão Simples.
                 </Heading>
 
                 <Text style={paragraph}>
-                  If this was you, click <a href={resetPasswordLink}>here</a>
+                  Clique no botão abaixo para redefinir sua senha:
+                </Text>
+
+                <Button 
+                  style={button}
+                  href={resetPasswordLink}
+                >
+                  Redefinir Senha
+                </Button>
+
+                <Text style={{ ...paragraph, marginTop: 10 }}>
+                  Se você não solicitou a redefinição de senha, por favor ignore este email.
                 </Text>
                 <Text style={{ ...paragraph, marginTop: -5 }}>
-                  If this wasn't you, please ignore this email.
+                  Este link expira em 1 hora.
                 </Text>
               </Column>
             </Row>
@@ -114,4 +125,14 @@ const boxInfos = {
 
 const containerImageFooter = {
   padding: '45px 0 0 0',
+};
+
+const button = {
+  backgroundColor: '#007bff',
+  borderRadius: '5px',
+  color: '#fff',
+  fontSize: '16px',
+  fontWeight: 'bold',
+  padding: '10px 20px',
+  textDecoration: 'none',
 };

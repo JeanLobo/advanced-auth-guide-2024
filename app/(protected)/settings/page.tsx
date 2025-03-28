@@ -34,7 +34,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserRole } from "@prisma/client";
-import { Label } from "@/components/ui/label";
 
 const SettingsPage = () => {
   const user = useCurrentUser();
@@ -69,14 +68,14 @@ const SettingsPage = () => {
             setSuccess(data.success);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => setError("Ocorreu um erro!"));
     });
   };
 
   return (
     <Card>
       <CardHeader>
-        <p className="text-2xl font-semibold text-center">⚙️ Settings</p>
+        <p className="text-2xl font-semibold text-center">⚙️ Configurações</p>
       </CardHeader>
       <Separator />
       <CardContent className="mt-4">
@@ -88,7 +87,7 @@ const SettingsPage = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Nome</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -115,7 +114,7 @@ const SettingsPage = () => {
                           <Input
                             type="email"
                             {...field}
-                            placeholder="john.doe@example.com"
+                            placeholder="john.doe@exemplo.com"
                             disabled={isPending}
                             autoComplete="off"
                             autoCorrect="off"

@@ -9,30 +9,67 @@ const domain = process.env.NEXT_PUBLIC_APP_URL;
 export const sendVerificationEmail = async (email: string, token: string, name: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: email,
-    subject: "[🔐Auth]: Please verify your email.",
-    react: VerificationEmail({ confirmLink: confirmLink, name: name })
-  })
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "Gestão Simples <onboarding@resend.dev>",
+      to: email,
+      subject: "[Gestão Simples] Por favor, verifique seu email",
+      react: VerificationEmail({ confirmLink: confirmLink, name: name })
+    });
+    
+    if (error) {
+      console.error("Erro ao enviar email de verificação:", error);
+      return { error };
+    }
+    
+    console.log("Email de verificação enviado com sucesso:", data);
+    return { data };
+  } catch (error) {
+    console.error("Exceção ao enviar email de verificação:", error);
+    return { error };
+  }
 }
 
 export const sendPasswordResetEmail = async (email: string, token: string, name: string) => {
   const resetPasswordLink = `${domain}/auth/new-password?token=${token}`;
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: email,
-    subject: "[🔐Auth]: Reset you password.",
-    react: PasswordResetEmail({ resetPasswordLink: resetPasswordLink, name: name })
-  })
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "Gestão Simples <onboarding@resend.dev>",
+      to: email,
+      subject: "[Gestão Simples] Redefinição de senha",
+      react: PasswordResetEmail({ resetPasswordLink: resetPasswordLink, name: name })
+    });
+    
+    if (error) {
+      console.error("Erro ao enviar email de redefinição de senha:", error);
+      return { error };
+    }
+    
+    return { data };
+  } catch (error) {
+    console.error("Exceção ao enviar email de redefinição de senha:", error);
+    return { error };
+  }
 }
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string, name: string) => {
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: email,
-    subject: "[🔐Auth]: Please verify Login Attempt.",
-    react: TwoFactorEmail({ token, name })
-  })
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "Gestão Simples <onboarding@resend.dev>",
+      to: email,
+      subject: "[Gestão Simples] Verificação de tentativa de login",
+      react: TwoFactorEmail({ token, name })
+    });
+    
+    if (error) {
+      console.error("Erro ao enviar email de código 2FA:", error);
+      return { error };
+    }
+    
+    return { data };
+  } catch (error) {
+    console.error("Exceção ao enviar email de código 2FA:", error);
+    return { error };
+  }
 }

@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { NewPasswordSchema } from "@/schemas";
 import { newPassword } from "@/actions/new-password";
@@ -20,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { useSearchParams } from "next/navigation";
 
 export const NewPasswordForm = () => {
   const searchParams = useSearchParams();
@@ -41,8 +41,6 @@ export const NewPasswordForm = () => {
     setError("");
     setSuccess("");
 
-    console.log(values);
-
     startTransition(() => {
       newPassword(values, token)
         .then((data) => {
@@ -56,8 +54,8 @@ export const NewPasswordForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Reset your password"
-      backButtonLabel="Back to login"
+      headerLabel="Redefinir sua senha"
+      backButtonLabel="Voltar para login"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -71,7 +69,7 @@ export const NewPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>New Password</FormLabel>
+                  <FormLabel>Nova Senha</FormLabel>
                   <FormControl>
                     <Input 
                       {...field} 
@@ -89,7 +87,7 @@ export const NewPasswordForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button type="submit" disabled={isPending} className="w-full">
-            Reset password
+            Redefinir senha
           </Button>
         </form>
       </Form>
