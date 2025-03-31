@@ -164,7 +164,7 @@ export const RegisterForm = () => {
       register(values)
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+          setError(data.error);
             return;
           }
           
@@ -298,63 +298,63 @@ export const RegisterForm = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="space-y-6"
-          >
+          className="space-y-6"
+        >
             <form onSubmit={(e) => { e.preventDefault(); nextStep(); }} className="space-y-6">
               {/* Passo 1: Dados do usuário */}
               {step === 1 && (
-                <div className="space-y-4">
+          <div className="space-y-4">
                   <div className="grid gap-6">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
                           <FormLabel>Nome do Usuário</FormLabel>
-                          <FormControl>
-                            <Input 
-                              {...field} 
+                  <FormControl>
+                    <Input 
+                      {...field} 
                               placeholder="João Silva"
                               autoComplete="name"
-                              disabled={isPending}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      disabled={isPending}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
                     
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input 
-                              {...field} 
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input 
+                      {...field} 
                               placeholder="joao.silva@exemplo.com" 
-                              type="email"
+                      type="email"
                               autoComplete="email"
-                              disabled={isPending}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      disabled={isPending}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
                     
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
                           <FormLabel>Senha</FormLabel>
-                          <FormControl>
-                            <Input 
-                              {...field} 
+                  <FormControl>
+                    <Input 
+                      {...field} 
                               placeholder="******" 
-                              type="password"
+                      type="password"
                               autoComplete="new-password"
                               disabled={isPending}
                             />
@@ -585,14 +585,14 @@ export const RegisterForm = () => {
                                   <Input 
                                     {...field} 
                                     placeholder="São Paulo"
-                                    disabled={isPending}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
                         
                         <FormField
                           control={form.control}
@@ -680,7 +680,7 @@ export const RegisterForm = () => {
                 </div>
               )}
               
-              <FormError message={error} />
+          <FormError message={error} />
               {step !== 3 && <FormSuccess message={success} />}
               
               <div className="flex flex-col gap-2">
@@ -738,11 +738,11 @@ export const RegisterForm = () => {
                           <CheckCircle className="h-4 w-4 ml-2" />
                         </>
                       )}
-                    </Button>
+          </Button>
                   )}
                 </div>
               </div>
-            </form>
+        </form>
           </motion.div>
         </AnimatePresence>
       </Form>

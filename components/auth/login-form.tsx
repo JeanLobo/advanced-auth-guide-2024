@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -29,8 +29,7 @@ interface LoginFormProps {
   hideSocial?: boolean;
 }
 
-export const LoginForm = ({ hideSocial = false }: LoginFormProps) => {
-  const router = useRouter();
+export const LoginForm = ({ hideSocial = false }: LoginFormProps): JSX.Element => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
@@ -100,9 +99,9 @@ export const LoginForm = ({ hideSocial = false }: LoginFormProps) => {
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
+              render={({ field }): JSX.Element => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -118,7 +117,7 @@ export const LoginForm = ({ hideSocial = false }: LoginFormProps) => {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
+              render={({ field }): JSX.Element => (
                 <FormItem>
                   <div className="flex items-center justify-between">
                     <FormLabel>Senha</FormLabel>
@@ -156,9 +155,9 @@ export const LoginForm = ({ hideSocial = false }: LoginFormProps) => {
             {isPending || isLoggingIn ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Fazendo login...
+                Acessando...
               </>
-            ) : "Login"}
+            ) : "Acessar usando suas credenciais"}
           </Button>
         </form>
       </Form>
@@ -171,7 +170,7 @@ export const LoginForm = ({ hideSocial = false }: LoginFormProps) => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Ou continue com
+                Ou rapidamente
               </span>
             </div>
           </div>

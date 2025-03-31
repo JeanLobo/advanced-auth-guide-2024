@@ -25,7 +25,7 @@ export const Social = () => {
         onClick={onClick}
       >
         <FcGoogle className="h-5 w-5 mr-2" />
-        Continuar com Google
+        Acessar através do Google
       </Button>
     </div>
   )
